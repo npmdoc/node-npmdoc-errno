@@ -1,0 +1,284 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/rvagg/node-errno"
+
+    >errno (v0.1.4)</a>
+</h1>
+<h4>libuv errno details exposed</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.errno">module errno</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.errno.create">
+            function <span class="apidocSignatureSpan">errno.</span>create
+            <span class="apidocSignatureSpan">(type, proto)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan"></span>errno</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">errno.</span>all</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">errno.</span>code</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">errno.</span>custom</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.errno.custom">module errno.custom</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.errno.custom.CustomError">
+            function <span class="apidocSignatureSpan">errno.custom.</span>CustomError
+            <span class="apidocSignatureSpan">(message, cause)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.errno.custom.FilesystemError">
+            function <span class="apidocSignatureSpan">errno.custom.</span>FilesystemError
+            <span class="apidocSignatureSpan">(message, cause)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.errno.custom.createError">
+            function <span class="apidocSignatureSpan">errno.custom.</span>createError
+            <span class="apidocSignatureSpan">(type, proto)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.errno" id="apidoc.module.errno">module errno</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.errno.create" id="apidoc.element.errno.create">
+        function <span class="apidocSignatureSpan">errno.</span>create
+        <span class="apidocSignatureSpan">(type, proto)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">create = function (type, proto) {
+  return createError(errno, type, proto)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+t.equal(errno.errno[1], errno.all[2], &#x27;errno 1 not third element&#x27;)
+
+t.equal(errno.code[&#x27;EOF&#x27;], errno.all[2], &#x27;code EOF not third element&#x27;)
+t.end()
+})
+
+test(&#x27;custom errors&#x27;, function (t) {
+var Cust = errno.<span class="apidocCodeKeywordSpan">create</span>(&#x27;FooNotBarError&#x27;)
+var cust = new Cust(&#x27;foo is not bar&#x27;)
+
+t.equal(cust.name, &#x27;FooNotBarError&#x27;, &#x27;correct custom name&#x27;)
+t.equal(cust.type, &#x27;FooNotBarError&#x27;, &#x27;correct custom type&#x27;)
+t.equal(cust.message, &#x27;foo is not bar&#x27;, &#x27;correct custom message&#x27;)
+t.notOk(cust.cause, &#x27;no cause&#x27;)
+t.end()
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.errno.custom" id="apidoc.module.errno.custom">module errno.custom</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.errno.custom.CustomError" id="apidoc.element.errno.custom.CustomError">
+        function <span class="apidocSignatureSpan">errno.custom.</span>CustomError
+        <span class="apidocSignatureSpan">(message, cause)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function CustomError(message, cause) {
+  Error.call(this)
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(this, arguments.callee)
+  init.call(this, &#x27;CustomError&#x27;, message, cause)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.errno.custom.FilesystemError" id="apidoc.element.errno.custom.FilesystemError">
+        function <span class="apidocSignatureSpan">errno.custom.</span>FilesystemError
+        <span class="apidocSignatureSpan">(message, cause)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">FilesystemError = function (message, cause) {
+  init.call(this, type, message, cause)
+  //TODO: the specificity here is stupid, errno should be available everywhere
+  if (type == &#x27;FilesystemError&#x27;) {
+    this.code    = this.cause.code
+    this.path    = this.cause.path
+    this.errno   = this.cause.errno
+    this.message =
+      (errno.errno[this.cause.errno]
+        ? errno.errno[this.cause.errno].description
+        : this.cause.message)
+      + (this.cause.path ? &#x27; [&#x27; + this.cause.path + &#x27;]&#x27; : &#x27;&#x27;)
+  }
+  Error.call(this)
+  if (Error.captureStackTrace)
+    Error.captureStackTrace(this, arguments.callee)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (err) return callback(new OtherError(err))
+```
+
+Also available is a `errno.custom.FilesystemError` with in-built access to errno properties:
+
+```js
+fs.readFile(&#x27;foo&#x27;, function (err, data) {
+  if (err) return callback(new errno.custom.<span class="apidocCodeKeywordSpan">FilesystemError</span>(err))
+  // do something else
+})
+```
+
+The resulting error object passed through the callback will have the following properties: `code`, `errno`, `path` and `message`
+will contain a descriptive human-readable message.
+
+## Contributors
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.errno.custom.createError" id="apidoc.element.errno.custom.createError">
+        function <span class="apidocSignatureSpan">errno.custom.</span>createError
+        <span class="apidocSignatureSpan">(type, proto)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">createError = function (type, proto) {
+  return createError(errno, type, proto)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+Supply no arguments for the full list. Error codes are processed case-insensitive.
+
+You will need to install with `npm install errno -g` if you want the `errno` command to be available without supplying a full path
+ to the node_modules installation.
+
+&#x3c;a name=&#x22;customerrors&#x22;&#x3e;&#x3c;/a&#x3e;
+## Custom errors
+
+Use `errno.custom.<span class="apidocCodeKeywordSpan">createError</span>()` to create custom `Error` objects to throw around in
+your Node.js library. Create error heirachies so `instanceof` becomes a useful tool in tracking errors. Call-stack is correctly
+captured at the time you create an instance of the error object, plus a `cause` property will make available the original error
+object if you pass one in to the constructor.
+
+```js
+var create = require(&#x27;errno&#x27;).custom.createError
+var MyError = create(&#x27;MyError&#x27;) // inherits from Error
+var SpecificError = create(&#x27;SpecificError&#x27;, MyError) // inherits from MyError
+var OtherError = create(&#x27;OtherError&#x27;, MyError)
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
